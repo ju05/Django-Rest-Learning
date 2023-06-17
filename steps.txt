@@ -1,0 +1,54 @@
+Python - m venv myenv
+
+Myenv/scripts/activate
+
+Pip install djangorestframework
+
+Django-amin start project my_project
+
+1- add 'rest_framework' in installed apps
+2- add it in urls 
+path('api-auth/', include('rest_framework.urls'))
+3- create super user: python manage.py createsuperuser
+4- runserver and check is ok
+5 - create your app: python manage.py startapp my_app
+6 - add the new app to installed apps
+7 - create the models
+8 - makemigrations
+9 - migrate
+
+serializer - allow a convertion of native data (integer, string, dict) into text/string
+
+int srt tuple sict -> (serializer) -> text/string -> service/client
+
+10 - in admin add the app models
+
+11 - create in the app a new file called 'serializers' 
+12 - in serializes.py create a serializer for each model:
+        from rest_framework import serializers
+        from .models import Post
+
+        class PostSerializer(serializers.ModelSerializer):
+            class Meta:
+                model = Post
+                fields = '__all__'
+
+
+        Serialization = Converting models into byte stream -> JSON
+        Deserealization = Converting JSON into byte stream -> dict
+
+13 - create the APIview/GenericAPIView in views.py
+        queryset = the colletion of data that you`ll work with 
+        serializer = the serializer you`ve created in serializers.py
+        you can use mixins to create the basic methods (get, post, put, delete)
+
+14 - create the permissions = in the app create permissions.py
+
+15 - hyperlinks - a way to easily navigate in the API
+        create it inside a serializer 
+        example: author = serializers.HyperlinkedIdentityField(view_name = 'author')
+        update the views.py
+
+16 - if you want to get a json (localhost/data.json) file of the data in the page you can add in urls.py:
+        from rest_framework.urlpatterns import format_suffix_patterns
+        urlpatterns = format_suffix_patterns(urlpatterns)
